@@ -1,5 +1,4 @@
-{
-    "movies": [
+[
         {
             "id": 1,
             "title": "Star Wars",
@@ -30,5 +29,4 @@
             "subtitle": "Return of the Jedi",
             "summary": "You know what to do."
         }
-    ]    
-}
+]
