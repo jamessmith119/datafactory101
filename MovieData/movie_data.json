@@ -1,0 +1,34 @@
+{
+    "movies": [
+        {
+            "id": 1,
+            "title": "Star Wars",
+            "subtitle": "A New Hope",
+            "summary": "Luke Skywalker and....come on, Google it if you don't already know."
+        },
+        {
+            "id": 2,
+            "title": "Star Wars",
+            "subtitle": "Empire Strikes Back",
+            "summary": "Darth Vader and....Google it."
+        },
+        {
+            "id": 3,
+            "title": "Star Wars",
+            "subtitle": "Return of the Jedi",
+            "summary": "You know what to do."
+        },
+        {
+            "id": 4,
+            "title": "The Godfather",
+            "subtitle": null,
+            "summary": "An offer you can't refuse."
+        },
+        {
+            "id": 5,
+            "title": "Star Wars",
+            "subtitle": "Return of the Jedi",
+            "summary": "You know what to do."
+        }
+    ]    
+}
