@@ -6,10 +6,28 @@
 			"type": "LinkedServiceReference"
 		},
 		"type": "AzureBlob",
+		"structure": [
+			{
+				"name": "id",
+				"type": "Int64"
+			},
+			{
+				"name": "title",
+				"type": "String"
+			},
+			{
+				"name": "subtitle",
+				"type": "String"
+			},
+			{
+				"name": "summary",
+				"type": "String"
+			}
+		],
 		"typeProperties": {
 			"format": {
 				"type": "JsonFormat",
-				"filePattern": "setOfObjects"
+				"filePattern": "arrayOfObjects"
 			},
 			"fileName": "movie_data.json",
 			"folderPath": "movies"
