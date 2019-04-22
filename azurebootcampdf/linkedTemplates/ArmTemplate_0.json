@@ -130,7 +130,7 @@
 					}
 				],
 				"typeProperties": {
-					"tableName": "Summaries"
+					"tableName": "[concat('[', 'dbo].[MovieSummaries]')]"
 				}
 			},
 			"dependsOn": [
