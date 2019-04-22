@@ -1,0 +1,106 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory Name",
+			"defaultValue": "azurebootcampdf"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/Movies Pipeline v2')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Blob to SQL",
+						"type": "Copy",
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"typeProperties": {
+							"source": {
+								"type": "BlobSource",
+								"recursive": true
+							},
+							"sink": {
+								"type": "SqlSink",
+								"writeBatchSize": 10000,
+								"sqlWriterStoredProcedureName": "[concat('[', 'dbo].[MergeMovies]')]",
+								"sqlWriterTableType": "MovieSummaryType"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"columnMappings": {
+									"id": "OriginalMovieId",
+									"title": "Title",
+									"subtitle": "Subtitle",
+									"summary": "Summary"
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "MoviesBlob",
+								"type": "DatasetReference"
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "MoviesSql",
+								"type": "DatasetReference"
+							}
+						]
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/MoviesSql')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MoviesSql')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Movies_AZBCSql",
+					"type": "LinkedServiceReference"
+				},
+				"type": "AzureSqlTable",
+				"structure": [
+					{
+						"name": "OriginalMovieId",
+						"type": "Int32"
+					},
+					{
+						"name": "Title",
+						"type": "String"
+					},
+					{
+						"name": "Subtitle",
+						"type": "String"
+					},
+					{
+						"name": "Summary",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"tableName": "Summaries"
+				}
+			}
+		}
+	]
+}
