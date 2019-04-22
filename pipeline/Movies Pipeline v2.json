@@ -42,7 +42,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "MoviesSql",
+						"referenceName": "MoviesSqlV2",
 						"type": "DatasetReference"
 					}
 				]
