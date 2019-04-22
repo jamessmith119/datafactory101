@@ -138,6 +138,43 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/MoviesSqlV2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Movies_AZBCSql",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"structure": [
+					{
+						"name": "OriginalMovieId",
+						"type": "Int32"
+					},
+					{
+						"name": "Title",
+						"type": "String"
+					},
+					{
+						"name": "Subtitle",
+						"type": "String"
+					},
+					{
+						"name": "Summary",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"tableName": "Summaries"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Movies_AZBCSql')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Movies Pipeline v2')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -186,7 +223,7 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "MoviesSql",
+								"referenceName": "MoviesSqlV2",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -197,7 +234,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/MoviesBlob')]",
-				"[concat(variables('factoryId'), '/datasets/MoviesSql')]"
+				"[concat(variables('factoryId'), '/datasets/MoviesSqlV2')]"
 			]
 		},
 		{
