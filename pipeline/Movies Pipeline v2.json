@@ -19,7 +19,9 @@
 					},
 					"sink": {
 						"type": "SqlSink",
-						"writeBatchSize": 10000
+						"writeBatchSize": 10000,
+						"sqlWriterStoredProcedureName": "[dbo].[MergeMovies]",
+						"sqlWriterTableType": "MovieSummaryType"
 					},
 					"enableStaging": false,
 					"translator": {

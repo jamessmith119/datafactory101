@@ -25,7 +25,7 @@
 			}
 		],
 		"typeProperties": {
-			"tableName": "[dbo].[MovieSummaries]"
+			"tableName": "Summaries"
 		}
 	}
 }
