@@ -1,7 +1,7 @@
 {
 	"name": "Movie Update Trigger",
 	"properties": {
-		"runtimeState": "Stopped",
+		"runtimeState": "Started",
 		"pipelines": [
 			{
 				"pipelineReference": {
