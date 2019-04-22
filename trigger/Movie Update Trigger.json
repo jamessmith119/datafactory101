@@ -12,6 +12,7 @@
 		],
 		"type": "BlobEventsTrigger",
 		"typeProperties": {
+			"blobPathBeginsWith": "/movies/",
 			"scope": "/subscriptions/e7772f74-f60a-4b8b-8695-a9cdede4fb61/resourceGroups/AzureBootCamp/providers/Microsoft.Storage/storageAccounts/azurebootcampstg",
 			"events": [
 				"Microsoft.Storage.BlobCreated"
