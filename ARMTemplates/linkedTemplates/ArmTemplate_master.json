@@ -1,0 +1,77 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory Name",
+			"defaultValue": "azurebootcampdf"
+		},
+		"Movies_AZBCBlobStorage_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Movies_AZBCBlobStorage'"
+		},
+		"Movies_AZBCSql_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Movies_AZBCSql'"
+		},
+		"MoviesBlob_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "movie_data.json"
+		},
+		"MoviesBlob_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "movies"
+		},
+		"Movie Update Trigger_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/e7772f74-f60a-4b8b-8695-a9cdede4fb61/resourceGroups/AzureBootCamp/providers/Microsoft.Storage/storageAccounts/azurebootcampstg"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas Token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"Movies_AZBCBlobStorage_connectionString": {
+						"value": "[parameters('Movies_AZBCBlobStorage_connectionString')]"
+					},
+					"Movies_AZBCSql_connectionString": {
+						"value": "[parameters('Movies_AZBCSql_connectionString')]"
+					},
+					"MoviesBlob_properties_typeProperties_fileName": {
+						"value": "[parameters('MoviesBlob_properties_typeProperties_fileName')]"
+					},
+					"MoviesBlob_properties_typeProperties_folderPath": {
+						"value": "[parameters('MoviesBlob_properties_typeProperties_folderPath')]"
+					},
+					"Movie Update Trigger_properties_typeProperties_scope": {
+						"value": "[parameters('Movie Update Trigger_properties_typeProperties_scope')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
