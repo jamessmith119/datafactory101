@@ -1,0 +1,21 @@
+{
+	"name": "Movie Update Trigger",
+	"properties": {
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Movies Pipeline v2",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"scope": "/subscriptions/e7772f74-f60a-4b8b-8695-a9cdede4fb61/resourceGroups/AzureBootCamp/providers/Microsoft.Storage/storageAccounts/azurebootcampstg",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}
