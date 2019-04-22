@@ -22,6 +22,10 @@
 		"MoviesBlob_properties_typeProperties_folderPath": {
 			"type": "string",
 			"defaultValue": "movies"
+		},
+		"Movie Update Trigger_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/e7772f74-f60a-4b8b-8695-a9cdede4fb61/resourceGroups/AzureBootCamp/providers/Microsoft.Storage/storageAccounts/azurebootcampstg"
 		}
 	},
 	"variables": {
@@ -255,6 +259,35 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/MoviesBlob')]",
 				"[concat(variables('factoryId'), '/datasets/MoviesSql')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Movie Update Trigger')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Movies Pipeline v2",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/movies/",
+					"scope": "[parameters('Movie Update Trigger_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobCreated"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Movies Pipeline v2')]"
 			]
 		}
 	]

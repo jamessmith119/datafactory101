@@ -16,6 +16,9 @@
 		},
 		"MoviesBlob_properties_typeProperties_folderPath": {
 			"value": "movies"
+		},
+		"Movie Update Trigger_properties_typeProperties_scope": {
+			"value": "/subscriptions/e7772f74-f60a-4b8b-8695-a9cdede4fb61/resourceGroups/AzureBootCamp/providers/Microsoft.Storage/storageAccounts/azurebootcampstg"
 		}
 	}
 }
