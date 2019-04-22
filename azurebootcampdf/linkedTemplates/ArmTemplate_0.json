@@ -126,11 +126,74 @@
 					}
 				],
 				"typeProperties": {
-					"tableName": "[concat('[', 'dbo].[MovieSummaries]')]"
+					"tableName": "Summaries"
 				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/Movies_AZBCSql')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Movies Pipeline v2')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Blob to SQL",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "BlobSource",
+								"recursive": true
+							},
+							"sink": {
+								"type": "SqlSink",
+								"writeBatchSize": 10000,
+								"sqlWriterStoredProcedureName": "[concat('[', 'dbo].[MergeMovies]')]",
+								"sqlWriterTableType": "MovieSummaryType"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"columnMappings": {
+									"id": "OriginalMovieId",
+									"title": "Title",
+									"subtitle": "Subtitle",
+									"summary": "Summary"
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "MoviesBlob",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "MoviesSql",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/MoviesBlob')]",
+				"[concat(variables('factoryId'), '/datasets/MoviesSql')]"
 			]
 		},
 		{
